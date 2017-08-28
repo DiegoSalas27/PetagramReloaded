@@ -6,12 +6,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.android.petagramreloaded.adapter.MascotaAdaptador;
+import com.example.android.petagramreloaded.adapter.MascotaAdaptador2;
+import com.example.android.petagramreloaded.pojo.Mascota;
+import com.example.android.petagramreloaded.presentador.IMascotaFavoritaPresenter;
+import com.example.android.petagramreloaded.presentador.MainActivityPresenter;
+import com.example.android.petagramreloaded.presentador.MascotaFavoritaPresenter;
+
 import java.util.ArrayList;
 
-public class MascotaFavorita extends AppCompatActivity {
+public class MascotaFavorita extends AppCompatActivity implements IMascotaFavoritaView{
 
     RecyclerView listaMascotas;
     ArrayList<Mascota> mascotas;
+    private IMascotaFavoritaPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,28 +32,25 @@ public class MascotaFavorita extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listaMascotas = (RecyclerView) findViewById(R.id.rvMasctoaFavorita);
+        presenter = new MascotaFavoritaPresenter(this, getBaseContext());
 
+    }
+
+    @Override
+    public void generarLinearLayoutVertical() {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-
         listaMascotas.setLayoutManager(llm);
-        inicializarListaContactos();
-        inicializarAdaptador();
-
-
     }
-    public MascotaAdaptador adaptador;
-    public void inicializarAdaptador(){
-        adaptador = new MascotaAdaptador(mascotas, this);
+
+    @Override
+    public MascotaAdaptador2 crearAdaptador(ArrayList<Mascota> mascotas) {
+        MascotaAdaptador2 adaptador = new MascotaAdaptador2(mascotas, this);
+        return adaptador;
+    }
+
+    @Override
+    public void inicializarAdaptadorRV(MascotaAdaptador2 adaptador) {
         listaMascotas.setAdapter(adaptador);
-    }
-    public void inicializarListaContactos(){
-        mascotas = new ArrayList<>();
-
-        mascotas.add(new Mascota(R.drawable.pet3, "Pedro", 3));
-        mascotas.add(new Mascota(R.drawable.pet5, "Clarita", 4));
-        mascotas.add(new Mascota(R.drawable.pet1, "Akira", 1));
-        mascotas.add(new Mascota(R.drawable.pet2, "Toyotaro", 5));
-        mascotas.add(new Mascota(R.drawable.pet4, "Mimascot", 6));
     }
 }

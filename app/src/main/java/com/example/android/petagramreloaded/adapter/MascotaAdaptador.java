@@ -1,10 +1,8 @@
-package com.example.android.petagramreloaded;
+package com.example.android.petagramreloaded.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -12,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.example.android.petagramreloaded.R;
+import com.example.android.petagramreloaded.db.ConstructorMascota;
+import com.example.android.petagramreloaded.pojo.Mascota;
 
-import static com.example.android.petagramreloaded.R.id.tvnumLikes;
+import java.util.ArrayList;
 
 /**
  * Created by DOMINIC on 8/12/2017.
@@ -44,7 +44,7 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
         final Mascota mascota = mascotas.get(position);
         mascotaViewHolder.imgFoto.setImageResource(mascota.getImgFoto());
         mascotaViewHolder.tvNombre.setText(mascota.getNombre());
-        mascotaViewHolder.tvnumLikes.setText(Integer.toString(mascota.getNumBones()));
+        mascotaViewHolder.tvnumLikes.setText(String.valueOf(mascota.getNumBones()));
 
         mascotaViewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,8 +55,10 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
                     Toast.makeText(activity, "Too much love! " + mascota.getNombre(), Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(activity, "Way too Much love! " + mascota.getNombre(), Toast.LENGTH_SHORT).show();
-                mascota.setNumBones(mascota.getNumBones() + 1);
-                mascotaViewHolder.tvnumLikes.setText(Integer.toString(mascota.getNumBones()));
+
+                ConstructorMascota constructorMascota = new ConstructorMascota(activity);
+                constructorMascota.darLikeMascota(mascota);
+                mascotaViewHolder.tvnumLikes.setText(String.valueOf(constructorMascota.obtenerLikesMascota(mascota)));
 
             }
         });
@@ -72,7 +74,6 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
         private TextView tvNombre, tvnumLikes;
         private ImageView imgFoto;
         private ImageButton btnLike;
-        private ImageButton btnumLikes;
 
         public MascotaViewHolder(View itemView) {
             super(itemView);
@@ -80,7 +81,6 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
             tvNombre = (TextView) itemView.findViewById(R.id.tvNombre);
             tvnumLikes = (TextView) itemView.findViewById(R.id.tvnumLikes);
             btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
-            btnumLikes = (ImageButton) itemView.findViewById(R.id.btnnumLikes);
         }
     }
 }

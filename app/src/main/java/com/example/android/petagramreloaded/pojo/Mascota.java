@@ -1,4 +1,4 @@
-package com.example.android.petagramreloaded;
+package com.example.android.petagramreloaded.pojo;
 
 /**
  * Created by DOMINIC on 8/12/2017.
@@ -6,6 +6,7 @@ package com.example.android.petagramreloaded;
 
 public class Mascota {
 
+    private int id;
     private int imgFoto;
     private String nombre;
     private int numBones;
@@ -14,6 +15,10 @@ public class Mascota {
         this.imgFoto = imgFoto;
         this.nombre = nombre;
         this.numBones = numBones;
+    }
+
+    public Mascota() {
+
     }
 
     public int getImgFoto() {
@@ -39,4 +44,12 @@ public class Mascota {
     public void setNumBones(int numBones) {
         this.numBones = numBones;
     }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }
